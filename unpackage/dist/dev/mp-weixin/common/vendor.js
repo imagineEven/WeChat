@@ -6711,6 +6711,20 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "F:\\work\\hwtpl+\\hello-uniapp\\init\\api.js":
+/*!***********************************************!*\
+  !*** F:/work/hwtpl+/hello-uniapp/init/api.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+ // import { Request } from './util';
+// console.log('require', Request)
+console.log(11111111);
+
+/***/ }),
+
 /***/ "F:\\work\\hwtpl+\\hello-uniapp\\init\\init.js":
 /*!************************************************!*\
   !*** F:/work/hwtpl+/hello-uniapp/init/init.js ***!
@@ -6719,25 +6733,86 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _util = __webpack_require__(/*! ./util */ "F:\\work\\hwtpl+\\hello-uniapp\\init\\util.js");
+__webpack_require__(/*! ./api */ "F:\\work\\hwtpl+\\hello-uniapp\\init\\api.js");
+var baseUrl = '';
+if (true) {
+  baseUrl = 'https://192.168.2.247';
+} else {}
+// Tips.showLoading();
 
 
+// console.log('auth', auth)
+// 获取openId
+function getOpenId(code) {
+  uni.request({
+    url: 'https://api.weixin.qq.com/sns/jscode2session',
+    method: 'GET',
+    data: {
+      appid: "wx975d5ceaf8611171",
+      secret: "21ceadae454237fb0f61bd847d643e50",
+      js_code: code,
+      grant_type: "authorization_code" },
 
+    success: function success(res) {
+      console.log('res', res);
+    } });
 
+}
 
+// 获取提供商
+function getProvider() {
+  return new Promise(function (resolve, reject) {
+    uni.getProvider({
+      service: 'oauth',
+      success: function success(res) {
+        if (res.provider.length > 0) {
+          resolve(res.provider);
+        } else {
+          reject('没有获取到provider');
+        }
+      },
+      fail: function fail(err) {
+        console.log('获取供应商失败', err);
+        reject(err);
+      } });
 
+  });
+}
+// 获取token
+function login(provider) {
+  return new Promise(function (resolve, reject) {
+    uni.login({
+      provider: provider,
+      success: function success(loginRes) {
+        if (loginRes.code) {
+          resolve(loginRes.code);
+        } else {
+          reject('没有获取到code');
+        }
+      },
+      fail: function fail(err) {
+        reject(err);
+      } });
 
+  });
+}
 
+getProvider().then(function (providerArr) {
+  var provider = providerArr[0];
+  console.log('provider', provider);
+  return login(provider);
+}).then(function (code) {
+  getOpenId(code);
+  console.log('code', code);
+}).catch(function (err) {
+  throw err;
+});
 
+var init = {
+  baseUrl: baseUrl };var _default =
 
-
-
-
-
-
-
-var _util = __webpack_require__(/*! ./util */ "F:\\work\\hwtpl+\\hello-uniapp\\init\\util.js");console.log('init is runing');console.log('uni', uni);console.log('wx', wx);var baseUrl = '';if (true) {baseUrl = 'https://192.168.2.247';} else {}var init = { baseUrl: baseUrl };var _default = init;exports.default = _default;
-_util.Tips.showNavBarL();
+init;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
@@ -6750,31 +6825,27 @@ _util.Tips.showNavBarL();
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.Tips = void 0;function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var Tips = /*#__PURE__*/function () {
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.Tips = void 0;function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var Tips = /*#__PURE__*/function () {
   function Tips() {_classCallCheck(this, Tips);
     console.log('this is the tips');
     this.isLoading = false;
   }_createClass(Tips, null, [{ key: "showToast", value: function showToast()
 
+    {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "成功";var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1500;
+      uni.showToast({
+        title: title,
+        mask: true,
+        duration: duration });
+
+    } }, { key: "hideToast", value: function hideToast()
+
     {
-      wx.showToast({
-        title: '干杯',
-        mask: false,
-        icon: 'success' });
-
-    } }, { key: "showModal", value: function showModal()
-
-    {
-      wx.showModal({
-        title: 'this is the modal',
-        content: 'why',
-        comfirm: 'sure' });
-
+      uni.hideToast();
     } }, { key: "showLoading", value: function showLoading()
 
-    {
+    {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '加载中';
       if (!this.isLoading) {
-        wx.showLoading({
+        uni.showLoading({
           title: '加载中',
           mask: true });
 
@@ -6784,14 +6855,39 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.Tips = voi
 
     {
       if (this.isLoading) {
-        wx.hideLoading();
+        uni.hideLoading();
         this.isLoading = false;
       }
-    } }, { key: "showNavBarL", value: function showNavBarL()
+    } }]);return Tips;}();exports.Tips = Tips;var
 
-    {
-      wx.showNavigationBarLoading();
-    } }]);return Tips;}();exports.Tips = Tips;
+
+Request =
+function Request() {_classCallCheck(this, Request);
+}
+
+//   request(dataObj) {
+//     Tips.showLoading()
+//     let {url, data, method} = dataObj;
+//     return new Promise((resolve, reject) => {
+//       uni.request({
+//         url: url,
+//         data: data,
+//         method: method,
+//         success: function(res) {
+//           Tips.hideLoading()
+//           resolve(res);
+//         	console.log(res);
+//         },
+//         fail: function(err) {
+//           Tips.hideLoading()
+//           Tips.showToast('请求失败', 1000);
+//           throw err;
+//         }
+//       })
+//     })
+//   }
+;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

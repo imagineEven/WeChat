@@ -1,12 +1,20 @@
 <template>
-	<div>
-		<div class="one list">launch</div>
-		<div class="two list">April</div>
-	</div>
+	<view>
+		<view class="one list">{{mate}}</view>
+		<!--  #ifdef  MP-WEIXIN -->
+		<view class="two list">April</view>
+		<!--  #endif -->
+	</view>
 </template>
 
 <script>
+var variable = 'fined means: 被罚的';
 export default {
+	data() {
+		return {
+			mate: 'has to win the argument'
+		}
+	},
 	// 监听页面加载；
 	onLoad() {
 		console.log('onload');
@@ -18,7 +26,7 @@ export default {
 		console.log('我会执行吗？')
 	},
 	mounted() {
-		console.log('mounted');
+		console.log('mounted', variable);
 	},
 	methods: {
 		launch() {

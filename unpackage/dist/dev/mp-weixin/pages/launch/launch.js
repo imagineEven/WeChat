@@ -15,8 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-var _default =
+//
+//
+
+var variable = 'fined means: 被罚的';var _default =
 {
+  data: function data() {
+    return {
+      mate: 'has to win the argument' };
+
+  },
   // 监听页面加载；
   onLoad: function onLoad() {
     console.log('onload');
@@ -28,7 +36,7 @@ var _default =
     console.log('我会执行吗？');
   },
   mounted: function mounted() {
-    console.log('mounted');
+    console.log('mounted', variable);
   },
   methods: {
     launch: function launch() {

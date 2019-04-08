@@ -4,46 +4,65 @@ class Tips {
 		this.isLoading = false;
 	}
 	
-	static showToast() {
-		wx.showToast({
-			title: '干杯',
-			mask: false,
-			icon: 'success'
+	static showToast(title="成功", duration=1500) {
+		uni.showToast({
+			title: title,
+			mask: true,
+      duration: duration
 		})
 	}
 	
-	static showModal() {
-		wx.showModal({
-			title: 'this is the modal',
-			content: 'why',
-			comfirm: 'sure'
-		})
+	static hideToast() {
+		uni.hideToast()
 	}
 	
-	static showLoading() {
-		if (!this.isLoading) {
-			wx.showLoading({
-				title: '加载中',
-				mask: true
-			})
-			this.isLoading = true;
-		}
+	static showLoading(title='加载中') {
+    if (!this.isLoading) {
+      uni.showLoading({
+        title: '加载中',
+        mask: true
+      })
+      this.isLoading = true;
+    }
 	}
 	
 	static hideLoading() {
-		if (this.isLoading) {
-			wx.hideLoading()
-			this.isLoading = false;
-		}
-	}
-	
-	static showNavBarL() {
-		wx.showNavigationBarLoading()
+    if (this.isLoading) {
+      uni.hideLoading()
+      this.isLoading = false;
+    }
 	}
 }
 
+class Request {
+  constructor() {
+  }
+  
+//   request(dataObj) {
+//     Tips.showLoading()
+//     let {url, data, method} = dataObj;
+//     return new Promise((resolve, reject) => {
+//       uni.request({
+//         url: url,
+//         data: data,
+//         method: method,
+//         success: function(res) {
+//           Tips.hideLoading()
+//           resolve(res);
+//         	console.log(res);
+//         },
+//         fail: function(err) {
+//           Tips.hideLoading()
+//           Tips.showToast('请求失败', 1000);
+//           throw err;
+//         }
+//       })
+//     })
+//   }
+}
 
 
 export {
 	Tips
+  // Request
 }
