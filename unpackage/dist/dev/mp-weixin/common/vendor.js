@@ -6711,186 +6711,6 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "F:\\work\\hwtpl+\\hello-uniapp\\init\\api.js":
-/*!***********************************************!*\
-  !*** F:/work/hwtpl+/hello-uniapp/init/api.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
- // import { Request } from './util';
-// console.log('require', Request)
-console.log(11111111);
-
-/***/ }),
-
-/***/ "F:\\work\\hwtpl+\\hello-uniapp\\init\\init.js":
-/*!************************************************!*\
-  !*** F:/work/hwtpl+/hello-uniapp/init/init.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _util = __webpack_require__(/*! ./util */ "F:\\work\\hwtpl+\\hello-uniapp\\init\\util.js");
-__webpack_require__(/*! ./api */ "F:\\work\\hwtpl+\\hello-uniapp\\init\\api.js");
-var baseUrl = '';
-if (true) {
-  baseUrl = 'https://192.168.2.247';
-} else {}
-// Tips.showLoading();
-
-
-// console.log('auth', auth)
-// 获取openId
-function getOpenId(code) {
-  uni.request({
-    url: 'https://api.weixin.qq.com/sns/jscode2session',
-    method: 'GET',
-    data: {
-      appid: "wx975d5ceaf8611171",
-      secret: "21ceadae454237fb0f61bd847d643e50",
-      js_code: code,
-      grant_type: "authorization_code" },
-
-    success: function success(res) {
-      console.log('res', res);
-    } });
-
-}
-
-// 获取提供商
-function getProvider() {
-  return new Promise(function (resolve, reject) {
-    uni.getProvider({
-      service: 'oauth',
-      success: function success(res) {
-        if (res.provider.length > 0) {
-          resolve(res.provider);
-        } else {
-          reject('没有获取到provider');
-        }
-      },
-      fail: function fail(err) {
-        console.log('获取供应商失败', err);
-        reject(err);
-      } });
-
-  });
-}
-// 获取token
-function login(provider) {
-  return new Promise(function (resolve, reject) {
-    uni.login({
-      provider: provider,
-      success: function success(loginRes) {
-        if (loginRes.code) {
-          resolve(loginRes.code);
-        } else {
-          reject('没有获取到code');
-        }
-      },
-      fail: function fail(err) {
-        reject(err);
-      } });
-
-  });
-}
-
-getProvider().then(function (providerArr) {
-  var provider = providerArr[0];
-  console.log('provider', provider);
-  return login(provider);
-}).then(function (code) {
-  getOpenId(code);
-  console.log('code', code);
-}).catch(function (err) {
-  throw err;
-});
-
-var init = {
-  baseUrl: baseUrl };var _default =
-
-init;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
-
-/***/ }),
-
-/***/ "F:\\work\\hwtpl+\\hello-uniapp\\init\\util.js":
-/*!************************************************!*\
-  !*** F:/work/hwtpl+/hello-uniapp/init/util.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.Tips = void 0;function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var Tips = /*#__PURE__*/function () {
-  function Tips() {_classCallCheck(this, Tips);
-    console.log('this is the tips');
-    this.isLoading = false;
-  }_createClass(Tips, null, [{ key: "showToast", value: function showToast()
-
-    {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "成功";var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1500;
-      uni.showToast({
-        title: title,
-        mask: true,
-        duration: duration });
-
-    } }, { key: "hideToast", value: function hideToast()
-
-    {
-      uni.hideToast();
-    } }, { key: "showLoading", value: function showLoading()
-
-    {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '加载中';
-      if (!this.isLoading) {
-        uni.showLoading({
-          title: '加载中',
-          mask: true });
-
-        this.isLoading = true;
-      }
-    } }, { key: "hideLoading", value: function hideLoading()
-
-    {
-      if (this.isLoading) {
-        uni.hideLoading();
-        this.isLoading = false;
-      }
-    } }]);return Tips;}();exports.Tips = Tips;var
-
-
-Request =
-function Request() {_classCallCheck(this, Request);
-}
-
-//   request(dataObj) {
-//     Tips.showLoading()
-//     let {url, data, method} = dataObj;
-//     return new Promise((resolve, reject) => {
-//       uni.request({
-//         url: url,
-//         data: data,
-//         method: method,
-//         success: function(res) {
-//           Tips.hideLoading()
-//           resolve(res);
-//         	console.log(res);
-//         },
-//         fail: function(err) {
-//           Tips.hideLoading()
-//           Tips.showToast('请求失败', 1000);
-//           throw err;
-//         }
-//       })
-//     })
-//   }
-;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
-
-/***/ }),
-
 /***/ "F:\\work\\hwtpl+\\hello-uniapp\\main.js":
 /*!*******************************************!*\
   !*** F:/work/hwtpl+/hello-uniapp/main.js ***!
@@ -6902,7 +6722,7 @@ function Request() {_classCallCheck(this, Request);
 /* WEBPACK VAR INJECTION */(function(createApp) {__webpack_require__(/*! uni-pages */ "F:\\work\\hwtpl+\\hello-uniapp\\pages.json");
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ "F:\\work\\hwtpl+\\hello-uniapp\\App.vue"));
-var _init = _interopRequireDefault(__webpack_require__(/*! ./init/init */ "F:\\work\\hwtpl+\\hello-uniapp\\init\\init.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+var _init = _interopRequireDefault(__webpack_require__(/*! ./util/init */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\init.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 _vue.default.config.productionTip = false;
 _App.default.mpType = 'app';
 
@@ -6957,6 +6777,195 @@ createPage(_launch.default);
 
 "use strict";
 
+
+/***/ }),
+
+/***/ "F:\\work\\hwtpl+\\hello-uniapp\\util\\api.js":
+/*!***********************************************!*\
+  !*** F:/work/hwtpl+/hello-uniapp/util/api.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var _util = __webpack_require__(/*! ./util */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\util.js");
+console.log('require', _util.request);
+console.log(11111111);
+
+/***/ }),
+
+/***/ "F:\\work\\hwtpl+\\hello-uniapp\\util\\init.js":
+/*!************************************************!*\
+  !*** F:/work/hwtpl+/hello-uniapp/util/init.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _util = __webpack_require__(/*! ./util */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\util.js");
+__webpack_require__(/*! ./api */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\api.js");
+
+// 声明常量
+var initObj = {};
+if (true) {
+  initObj.baseUrl = 'https://192.168.2.247';
+} else {}
+
+// 获取openId
+function getOpenId(code) {
+  uni.request({
+    url: 'https://api.weixin.qq.com/sns/jscode2session',
+    method: 'GET',
+    data: {
+      appid: "wx975d5ceaf8611171",
+      secret: "21ceadae454237fb0f61bd847d643e50",
+      js_code: code,
+      grant_type: "authorization_code" },
+
+    success: function success(res) {
+      if (res.statusCode == -1) {
+        _util.Tips.showToast('系统繁忙，稍后再试');
+      } else if (res.statusCode == 40029) {
+        _util.Tips.showToast('code 无效');
+      } else if (res.statusCode == 45011) {
+        _util.Tips.showToast('频率限制，稍后再试');
+      } else if (res.statusCode == 200) {
+        initObj.session_key = res.data.session_key;
+        initObj.openId = res.data.openId;
+      } else {
+        _util.Tips.showToast('网络异常');
+      }
+      console.log('res', res);
+    } });
+
+}
+
+// 获取提供商
+function getProvider() {
+  return new Promise(function (resolve, reject) {
+    uni.getProvider({
+      service: 'oauth',
+      success: function success(res) {
+        if (res.provider.length > 0) {
+          resolve(res.provider);
+        } else {
+          reject('没有获取到provider');
+        }
+      },
+      fail: function fail(err) {
+        console.log('获取供应商失败', err);
+        reject(err);
+      } });
+
+  });
+}
+
+// 获取token
+function login(provider) {
+  return new Promise(function (resolve, reject) {
+    uni.login({
+      provider: provider,
+      success: function success(loginRes) {
+        if (loginRes.code) {
+          resolve(loginRes.code);
+        } else {
+          reject('没有获取到code');
+        }
+      },
+      fail: function fail(err) {
+        reject(err);
+      } });
+
+  });
+}
+
+getProvider().then(function (providerArr) {
+  var provider = providerArr[0];
+  console.log('provider', provider);
+  return login(provider);
+}).then(function (code) {
+  initObj.code = code;
+  getOpenId(code);
+  console.log('code', code);
+}).catch(function (err) {
+  throw err;
+});
+
+console.log('init', initObj);var _default =
+initObj;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
+
+/***/ }),
+
+/***/ "F:\\work\\hwtpl+\\hello-uniapp\\util\\util.js":
+/*!************************************************!*\
+  !*** F:/work/hwtpl+/hello-uniapp/util/util.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = request;exports.Tips = void 0;function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var Tips = /*#__PURE__*/function () {
+  function Tips() {_classCallCheck(this, Tips);
+    console.log('this is the tips');
+    this.isLoading = false;
+  }_createClass(Tips, null, [{ key: "showToast", value: function showToast()
+
+    {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "成功";var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1500;var icon = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'none';
+      uni.showToast({
+        title: title,
+        mask: true,
+        icon: icon,
+        duration: duration });
+
+    } }, { key: "hideToast", value: function hideToast()
+
+    {
+      uni.hideToast();
+    } }, { key: "showLoading", value: function showLoading()
+
+    {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '加载中';
+      if (!this.isLoading) {
+        uni.showLoading({
+          title: '加载中',
+          mask: true });
+
+        this.isLoading = true;
+      }
+    } }, { key: "hideLoading", value: function hideLoading()
+
+    {
+      if (this.isLoading) {
+        uni.hideLoading();
+        this.isLoading = false;
+      }
+    } }]);return Tips;}();exports.Tips = Tips;
+
+
+
+
+function request(dataObj) {
+  Tips.showLoading();var
+  url = dataObj.url,data = dataObj.data,method = dataObj.method;
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      url: url,
+      data: data,
+      method: method,
+      success: function success(res) {
+        Tips.hideLoading();
+        resolve(res);
+        console.log(res);
+      },
+      fail: function fail(err) {
+        Tips.hideLoading();
+        Tips.showToast('请求失败', 1000);
+        throw err;
+      } });
+
+  });
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ })
 

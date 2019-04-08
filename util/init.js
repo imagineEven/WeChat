@@ -1,15 +1,14 @@
-import {Tips} from "./util"
+import { Tips } from "./util"
 require('./api');
-let baseUrl = ''
+
+// 声明常量
+let initObj = {};
 if(process.env.NODE_ENV === 'development'){
-  baseUrl = 'https://192.168.2.247'
+  initObj.baseUrl = 'https://192.168.2.247'
 }else{
-  baseUrl = 'https://mini-program.imaginelearning.cn'
+  initObj.baseUrl = 'https://mini-program.imaginelearning.cn'
 }
-// Tips.showLoading();
 
-
-// console.log('auth', auth)
 // 获取openId
 function getOpenId(code) {
   uni.request({
@@ -22,6 +21,18 @@ function getOpenId(code) {
       grant_type: "authorization_code"
     },
     success: function(res) {
+      if (res.statusCode == -1) {
+        Tips.showToast('系统繁忙，稍后再试')
+      } else if (res.statusCode ==  40029) {
+        Tips.showToast('code 无效')
+      } else if (res.statusCode ==  45011) {
+        Tips.showToast('频率限制，稍后再试')
+      } else if (res.statusCode == 200) {
+        initObj.session_key = res.data.session_key;
+        initObj.openId = res.data.openId;
+      } else {
+        Tips.showToast('网络异常');
+      }
       console.log('res', res);
     }
   })
@@ -46,6 +57,7 @@ function getProvider() {
     }); 
   })
 }
+
 // 获取token
 function login(provider) {
   return new Promise((resolve, reject)=> {
@@ -70,13 +82,12 @@ getProvider().then(providerArr => {
   console.log('provider', provider);
   return login(provider)
 }).then(code => {
+  initObj.code = code;
   getOpenId(code)
   console.log('code', code)
 }).catch(err => {
   throw err;
 })
 
-let init = {
-	baseUrl: baseUrl
-};
-export default init;
+console.log('init', initObj)
+export default initObj;
