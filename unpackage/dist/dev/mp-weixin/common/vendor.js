@@ -6807,8 +6807,9 @@ __webpack_require__(/*! ./api */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\api.js")
 
 // 声明常量
 var initObj = {};
+var baseUrl = '';
 if (true) {
-  initObj.baseUrl = 'https://192.168.2.247';
+  baseUrl = 'https://192.168.2.247';
 } else {}
 
 // 获取openId
@@ -6831,7 +6832,7 @@ function getOpenId(code) {
         _util.Tips.showToast('频率限制，稍后再试');
       } else if (res.statusCode == 200) {
         initObj.session_key = res.data.session_key;
-        initObj.openId = res.data.openId;
+        initObj.openid = res.data.openid;
       } else {
         _util.Tips.showToast('网络异常');
       }
@@ -6886,7 +6887,7 @@ getProvider().then(function (providerArr) {
 }).then(function (code) {
   initObj.code = code;
   getOpenId(code);
-  console.log('code', code);
+  // console.log('code', code)
 }).catch(function (err) {
   throw err;
 });

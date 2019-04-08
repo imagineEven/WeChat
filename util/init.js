@@ -3,10 +3,11 @@ require('./api');
 
 // 声明常量
 let initObj = {};
+let baseUrl = ''
 if(process.env.NODE_ENV === 'development'){
-  initObj.baseUrl = 'https://192.168.2.247'
+  baseUrl = 'https://192.168.2.247'
 }else{
-  initObj.baseUrl = 'https://mini-program.imaginelearning.cn'
+  baseUrl = 'https://mini-program.imaginelearning.cn'
 }
 
 // 获取openId
@@ -29,7 +30,7 @@ function getOpenId(code) {
         Tips.showToast('频率限制，稍后再试')
       } else if (res.statusCode == 200) {
         initObj.session_key = res.data.session_key;
-        initObj.openId = res.data.openId;
+        initObj.openid = res.data.openid;
       } else {
         Tips.showToast('网络异常');
       }
@@ -84,7 +85,7 @@ getProvider().then(providerArr => {
 }).then(code => {
   initObj.code = code;
   getOpenId(code)
-  console.log('code', code)
+  // console.log('code', code)
 }).catch(err => {
   throw err;
 })
