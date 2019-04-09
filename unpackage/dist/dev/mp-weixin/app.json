@@ -20,7 +20,7 @@
         "pagePath": "pages/index/index",
         "iconPath": "static/component.png",
         "selectedIconPath": "static/componentHL.png",
-        "text": "Even"
+        "text": "Lift"
       },
       {
         "pagePath": "pages/launch/launch",

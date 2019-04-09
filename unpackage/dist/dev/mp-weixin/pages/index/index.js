@@ -30,9 +30,6 @@ var _default =
     // console.log(option);
     // console.log('scrollTop', scrollTop);
   },
-  onPageScroll: function onPageScroll(scrollTop) {
-    console.log("scrollTop", scrollTop);
-  },
   methods: {}
   // onShareAppMessage(res) {
   // 	console.log('分享的res', res);
