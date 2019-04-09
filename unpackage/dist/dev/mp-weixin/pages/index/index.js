@@ -22,7 +22,7 @@ var _default =
 {
   data: function data() {
     return {
-      title: 'Hello' };
+      title: "Hello" };
 
   },
   onLoad: function onLoad(option) {
@@ -31,9 +31,21 @@ var _default =
     // console.log('scrollTop', scrollTop);
   },
   onPageScroll: function onPageScroll(scrollTop) {
-    console.log('scrollTop', scrollTop);
+    console.log("scrollTop", scrollTop);
   },
-  methods: {} };exports.default = _default;
+  methods: {}
+  // onShareAppMessage(res) {
+  // 	console.log('分享的res', res);
+  //   if (res.from === "button") {
+  //     // 来自页面内分享按钮
+  //     console.log(res.target);
+  //   }
+  //   return {
+  //     title: "自定义分享标题",
+  //     path: "/pages/index/index?id=123"
+  //   };
+  // }
+};exports.default = _default;
 
 /***/ }),
 

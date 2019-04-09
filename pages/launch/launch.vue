@@ -2,8 +2,9 @@
 	<view>
 		<view class="one list">{{mate}}</view>
 		<!--  #ifdef  MP-WEIXIN -->
-		<view class="two list">April</view>
+		<view class="two list" @click="launch">April</view>
 		<!--  #endif -->
+		<button class="button" open-type="openSetting">分享给好友</button>
 	</view>
 </template>
 
@@ -12,7 +13,7 @@ var variable = 'fined means: 被罚的';
 export default {
 	data() {
 		return {
-			mate: 'has to win the argument'
+			mate: '开始支付'
 		}
 	},
 	// 监听页面加载；
@@ -31,6 +32,9 @@ export default {
 	methods: {
 		launch() {
 			console.log('launch')
+			uni.showShareMenu({
+				title: 'asd'
+			})
 		}
 	}
 }

@@ -52,5 +52,3 @@ getProvider().then(providerArr => {
 }).catch(err => {
   console.warn(err);
 })
-
-
