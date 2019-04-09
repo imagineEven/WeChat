@@ -20,7 +20,7 @@ class Tips {
 	static showLoading(title='加载中') {
     if (!this.isLoading) {
       uni.showLoading({
-        title: '加载中',
+        title: title,
         mask: true
       })
       this.isLoading = true;
@@ -34,8 +34,6 @@ class Tips {
     }
 	}
 }
-
-
   
 function request(dataObj) {
   Tips.showLoading()
@@ -59,7 +57,52 @@ function request(dataObj) {
   })
 }
 
+class Storage {
+  constructor() {
+  }
+
+  static setStorage(key, data) {
+    return new Promise((resolve, reject) => {
+      uni.setStorage({
+        key: key,
+        data: data,
+        success: resolve,
+        fail: reject
+      });
+    })
+  }
+
+  static getStorage(key) {
+    return new Promise((resolve, reject) => {
+      uni.getStorage({
+        key: key,
+        success: function (res) {
+          resolve(res.data)
+        },
+        fail: function() {
+          reject();
+        }
+      });
+    })
+  }
+
+  static removeStorage(key) {
+    return new Promise((resolve, reject) => {
+      uni.removeStorage({
+        key: key,
+        success: resolve,
+        fail: reject
+      });
+    })
+  }
+
+  static clearStorage() {
+    uni.clearStorage();
+  }
+}
+
 export {
 	Tips,
-  request
+  request,
+  Storage
 }

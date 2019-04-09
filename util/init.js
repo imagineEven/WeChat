@@ -1,5 +1,18 @@
-import { Tips } from "./util"
+import { Tips, Storage } from "./util"
 require('./api');
+
+// Tips.showLoading('我为什么不显示');
+
+Storage.setStorage('nihao', {name: 'Even', age: '23'}).then(() => {
+  console.log('成功了吗？')
+})
+
+setTimeout(() => {
+  Storage.getStorage('nihao').then((data) => {
+    console.log(data);
+  })
+},2000);
+
 
 // 声明常量
 let initObj = {};
@@ -87,7 +100,8 @@ getProvider().then(providerArr => {
   getOpenId(code)
   // console.log('code', code)
 }).catch(err => {
-  throw err;
+  console.warn(err);
+  console.log(11111111111111);
 })
 
 console.log('init', initObj)

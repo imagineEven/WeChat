@@ -6788,9 +6788,11 @@ createPage(_launch.default);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _util = __webpack_require__(/*! ./util */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\util.js");
-console.log('require', _util.request);
-console.log(11111111);
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _util = __webpack_require__(/*! ./util */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\util.js");
+console.log('require', _util.request);var _default =
+
+
+{};exports.default = _default;
 
 /***/ }),
 
@@ -6804,6 +6806,19 @@ console.log(11111111);
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _util = __webpack_require__(/*! ./util */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\util.js");
 __webpack_require__(/*! ./api */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\api.js");
+
+// Tips.showLoading('我为什么不显示');
+
+_util.Storage.setStorage('nihao', { name: 'Even', age: '23' }).then(function () {
+  console.log('成功了吗？');
+});
+
+setTimeout(function () {
+  _util.Storage.getStorage('nihao').then(function (data) {
+    console.log(data);
+  });
+}, 2000);
+
 
 // 声明常量
 var initObj = {};
@@ -6889,7 +6904,8 @@ getProvider().then(function (providerArr) {
   getOpenId(code);
   // console.log('code', code)
 }).catch(function (err) {
-  throw err;
+  console.warn(err);
+  console.log(11111111111111);
 });
 
 console.log('init', initObj);var _default =
@@ -6906,7 +6922,7 @@ initObj;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = request;exports.Tips = void 0;function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var Tips = /*#__PURE__*/function () {
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = request;exports.Storage = exports.Tips = void 0;function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var Tips = /*#__PURE__*/function () {
   function Tips() {_classCallCheck(this, Tips);
     console.log('this is the tips');
     this.isLoading = false;
@@ -6928,7 +6944,7 @@ initObj;exports.default = _default;
     {var title = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '加载中';
       if (!this.isLoading) {
         uni.showLoading({
-          title: '加载中',
+          title: title,
           mask: true });
 
         this.isLoading = true;
@@ -6941,8 +6957,6 @@ initObj;exports.default = _default;
         this.isLoading = false;
       }
     } }]);return Tips;}();exports.Tips = Tips;
-
-
 
 
 function request(dataObj) {
@@ -6965,7 +6979,50 @@ function request(dataObj) {
       } });
 
   });
-}
+}var
+
+Storage = /*#__PURE__*/function () {
+  function Storage() {_classCallCheck(this, Storage);
+  }_createClass(Storage, null, [{ key: "setStorage", value: function setStorage(
+
+    key, data) {
+      return new Promise(function (resolve, reject) {
+        uni.setStorage({
+          key: key,
+          data: data,
+          success: resolve,
+          fail: reject });
+
+      });
+    } }, { key: "getStorage", value: function getStorage(
+
+    key) {
+      return new Promise(function (resolve, reject) {
+        uni.getStorage({
+          key: key,
+          success: function success(res) {
+            resolve(res.data);
+          },
+          fail: function fail() {
+            reject();
+          } });
+
+      });
+    } }, { key: "removeStorage", value: function removeStorage(
+
+    key) {
+      return new Promise(function (resolve, reject) {
+        uni.removeStorage({
+          key: key,
+          success: resolve,
+          fail: reject });
+
+      });
+    } }, { key: "clearStorage", value: function clearStorage()
+
+    {
+      uni.clearStorage();
+    } }]);return Storage;}();exports.Storage = Storage;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ })
