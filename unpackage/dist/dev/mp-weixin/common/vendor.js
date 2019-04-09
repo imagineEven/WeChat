@@ -6788,11 +6788,33 @@ createPage(_launch.default);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _util = __webpack_require__(/*! ./util */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\util.js");
-console.log('require', _util.request);var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.getOpenId = getOpenId;var _request = __webpack_require__(/*! ./request */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\request.js");
+var _env = __webpack_require__(/*! ./env */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\env.js");
 
+// 获取微信openid
+function getOpenId(code) {
+  return (0, _request.GetOpenId)(_env.weixinBaseUrl, _env.appId, _env.secret, code);
+}
 
-{};exports.default = _default;
+/***/ }),
+
+/***/ "F:\\work\\hwtpl+\\hello-uniapp\\util\\env.js":
+/*!***********************************************!*\
+  !*** F:/work/hwtpl+/hello-uniapp/util/env.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.secret = exports.appId = exports.weixinBaseUrl = exports.baseUrl = void 0;
+var baseUrl = '';exports.baseUrl = baseUrl;
+if (true) {
+  exports.baseUrl = baseUrl = 'https://192.168.2.247';
+} else {}
+
+var weixinBaseUrl = 'https://api.weixin.qq.com/sns/jscode2session';exports.weixinBaseUrl = weixinBaseUrl;
+var appId = "wx975d5ceaf8611171";exports.appId = appId;
+var secret = "21ceadae454237fb0f61bd847d643e50";exports.secret = secret;
 
 /***/ }),
 
@@ -6804,59 +6826,10 @@ console.log('require', _util.request);var _default =
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _util = __webpack_require__(/*! ./util */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\util.js");
-__webpack_require__(/*! ./api */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\api.js");
+/* WEBPACK VAR INJECTION */(function(uni) {var _util = __webpack_require__(/*! ./util */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\util.js");
+var _api = __webpack_require__(/*! ./api */ "F:\\work\\hwtpl+\\hello-uniapp\\util\\api.js");
 
-// Tips.showLoading('我为什么不显示');
-
-_util.Storage.setStorage('nihao', { name: 'Even', age: '23' }).then(function () {
-  console.log('成功了吗？');
-});
-
-setTimeout(function () {
-  _util.Storage.getStorage('nihao').then(function (data) {
-    console.log(data);
-  });
-}, 2000);
-
-
-// 声明常量
-var initObj = {};
-var baseUrl = '';
-if (true) {
-  baseUrl = 'https://192.168.2.247';
-} else {}
-
-// 获取openId
-function getOpenId(code) {
-  uni.request({
-    url: 'https://api.weixin.qq.com/sns/jscode2session',
-    method: 'GET',
-    data: {
-      appid: "wx975d5ceaf8611171",
-      secret: "21ceadae454237fb0f61bd847d643e50",
-      js_code: code,
-      grant_type: "authorization_code" },
-
-    success: function success(res) {
-      if (res.statusCode == -1) {
-        _util.Tips.showToast('系统繁忙，稍后再试');
-      } else if (res.statusCode == 40029) {
-        _util.Tips.showToast('code 无效');
-      } else if (res.statusCode == 45011) {
-        _util.Tips.showToast('频率限制，稍后再试');
-      } else if (res.statusCode == 200) {
-        initObj.session_key = res.data.session_key;
-        initObj.openid = res.data.openid;
-      } else {
-        _util.Tips.showToast('网络异常');
-      }
-      console.log('res', res);
-    } });
-
-}
-
-// 获取提供商
+// 获取供应商
 function getProvider() {
   return new Promise(function (resolve, reject) {
     uni.getProvider({
@@ -6900,16 +6873,76 @@ getProvider().then(function (providerArr) {
   console.log('provider', provider);
   return login(provider);
 }).then(function (code) {
-  initObj.code = code;
-  getOpenId(code);
-  // console.log('code', code)
+  return (0, _api.getOpenId)(code);
+}).then(function (data) {
+  _util.Storage.setStorageSync('user', data);
+  console.log(_util.Storage.getStorageSync('user'));
 }).catch(function (err) {
   console.warn(err);
-  console.log(11111111111111);
 });
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
-console.log('init', initObj);var _default =
-initObj;exports.default = _default;
+/***/ }),
+
+/***/ "F:\\work\\hwtpl+\\hello-uniapp\\util\\request.js":
+/*!***************************************************!*\
+  !*** F:/work/hwtpl+/hello-uniapp/util/request.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.Request = Request;exports.GetOpenId = GetOpenId;
+
+function Request(dataObj) {
+  Tips.showLoading();var
+  url = dataObj.url,data = dataObj.data,method = dataObj.method;
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      url: url,
+      data: data,
+      method: method,
+      success: function success(res) {
+        Tips.hideLoading();
+        resolve(res);
+        console.log(res);
+      },
+      fail: function fail(err) {
+        Tips.hideLoading();
+        Tips.showToast('请求失败', 1000);
+        throw err;
+      } });
+
+  });
+}
+
+function GetOpenId(url, appid, secret, code) {
+  return new Promise(function (resolve, reject) {
+    uni.request({
+      url: url,
+      method: 'GET',
+      data: {
+        appid: appid,
+        secret: secret,
+        js_code: code,
+        grant_type: "authorization_code" },
+
+      success: function success(res) {
+        if (res.statusCode == -1) {
+          Tips.showToast('系统繁忙，稍后再试');
+        } else if (res.statusCode == 40029) {
+          Tips.showToast('code 无效');
+        } else if (res.statusCode == 45011) {
+          Tips.showToast('频率限制，稍后再试');
+        } else if (res.statusCode == 200) {
+          resolve(res.data);
+        } else {
+          Tips.showToast('网络异常');
+        }
+      } });
+
+  });
+}
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
@@ -6922,7 +6955,7 @@ initObj;exports.default = _default;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.request = request;exports.Storage = exports.Tips = void 0;function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var Tips = /*#__PURE__*/function () {
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.Storage = exports.Tips = void 0;function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var Tips = /*#__PURE__*/function () {
   function Tips() {_classCallCheck(this, Tips);
     console.log('this is the tips');
     this.isLoading = false;
@@ -6956,30 +6989,8 @@ initObj;exports.default = _default;
         uni.hideLoading();
         this.isLoading = false;
       }
-    } }]);return Tips;}();exports.Tips = Tips;
+    } }]);return Tips;}();exports.Tips = Tips;var
 
-
-function request(dataObj) {
-  Tips.showLoading();var
-  url = dataObj.url,data = dataObj.data,method = dataObj.method;
-  return new Promise(function (resolve, reject) {
-    uni.request({
-      url: url,
-      data: data,
-      method: method,
-      success: function success(res) {
-        Tips.hideLoading();
-        resolve(res);
-        console.log(res);
-      },
-      fail: function fail(err) {
-        Tips.hideLoading();
-        Tips.showToast('请求失败', 1000);
-        throw err;
-      } });
-
-  });
-}var
 
 Storage = /*#__PURE__*/function () {
   function Storage() {_classCallCheck(this, Storage);
@@ -7022,6 +7033,27 @@ Storage = /*#__PURE__*/function () {
 
     {
       uni.clearStorage();
+    } }, { key: "setStorageSync", value: function setStorageSync(
+
+    key, data) {
+      try {
+        uni.setStorageSync(key, data);
+      } catch (e) {
+        console.warn(e);
+      }
+    } }, { key: "getStorageSync", value: function getStorageSync(
+
+    key) {
+      try {
+        var value = uni.getStorageSync(key);
+        if (value) {
+          return value;
+        } else {
+          console.warn('获取Storage失败');
+        }
+      } catch (e) {
+        console.warn(e);
+      }
     } }]);return Storage;}();exports.Storage = Storage;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

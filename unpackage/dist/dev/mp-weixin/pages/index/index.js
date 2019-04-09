@@ -27,7 +27,7 @@ var _default =
   },
   onLoad: function onLoad(option) {
     // 页面加载；
-    console.log(option);
+    // console.log(option);
     // console.log('scrollTop', scrollTop);
   },
   onPageScroll: function onPageScroll(scrollTop) {

@@ -1,58 +1,7 @@
 import { Tips, Storage } from "./util"
-require('./api');
+import { getOpenId } from "./api"
 
-// Tips.showLoading('我为什么不显示');
-
-Storage.setStorage('nihao', {name: 'Even', age: '23'}).then(() => {
-  console.log('成功了吗？')
-})
-
-setTimeout(() => {
-  Storage.getStorage('nihao').then((data) => {
-    console.log(data);
-  })
-},2000);
-
-
-// 声明常量
-let initObj = {};
-let baseUrl = ''
-if(process.env.NODE_ENV === 'development'){
-  baseUrl = 'https://192.168.2.247'
-}else{
-  baseUrl = 'https://mini-program.imaginelearning.cn'
-}
-
-// 获取openId
-function getOpenId(code) {
-  uni.request({
-  	url: 'https://api.weixin.qq.com/sns/jscode2session',
-    method: 'GET',
-    data: {
-      appid: "wx975d5ceaf8611171",
-      secret: "21ceadae454237fb0f61bd847d643e50",
-      js_code: code,
-      grant_type: "authorization_code"
-    },
-    success: function(res) {
-      if (res.statusCode == -1) {
-        Tips.showToast('系统繁忙，稍后再试')
-      } else if (res.statusCode ==  40029) {
-        Tips.showToast('code 无效')
-      } else if (res.statusCode ==  45011) {
-        Tips.showToast('频率限制，稍后再试')
-      } else if (res.statusCode == 200) {
-        initObj.session_key = res.data.session_key;
-        initObj.openid = res.data.openid;
-      } else {
-        Tips.showToast('网络异常');
-      }
-      console.log('res', res);
-    }
-  })
-}
-
-// 获取提供商
+// 获取供应商
 function getProvider() {
   return new Promise((resolve, reject)=> {
     uni.getProvider({
@@ -96,13 +45,12 @@ getProvider().then(providerArr => {
   console.log('provider', provider);
   return login(provider)
 }).then(code => {
-  initObj.code = code;
-  getOpenId(code)
-  // console.log('code', code)
+  return getOpenId(code)
+}).then(data => {
+  Storage.setStorageSync('user', data);
+  console.log(Storage.getStorageSync('user'))
 }).catch(err => {
   console.warn(err);
-  console.log(11111111111111);
 })
 
-console.log('init', initObj)
-export default initObj;
+

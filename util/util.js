@@ -35,28 +35,6 @@ class Tips {
 	}
 }
   
-function request(dataObj) {
-  Tips.showLoading()
-  let {url, data, method} = dataObj;
-  return new Promise((resolve, reject) => {
-    uni.request({
-      url: url,
-      data: data,
-      method: method,
-      success: function(res) {
-        Tips.hideLoading()
-        resolve(res);
-        console.log(res);
-      },
-      fail: function(err) {
-        Tips.hideLoading()
-        Tips.showToast('请求失败', 1000);
-        throw err;
-      }
-    })
-  })
-}
-
 class Storage {
   constructor() {
   }
@@ -99,10 +77,32 @@ class Storage {
   static clearStorage() {
     uni.clearStorage();
   }
+
+  static setStorageSync(key, data) {
+    try {
+      uni.setStorageSync(key, data);
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
+  static getStorageSync(key) { 
+    try {
+      const value = uni.getStorageSync(key);
+      if (value) {
+        return value;
+      } else {
+        console.warn('获取Storage失败');
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+  }
 }
+
+
 
 export {
 	Tips,
-  request,
   Storage
 }

@@ -1,7 +1,13 @@
-import { request } from './util';
-console.log('require', request)
+import { Request, GetOpenId } from './request';
+import { baseUrl, weixinBaseUrl, appId, secret } from './env';
+
+// 获取微信openid
+function getOpenId(code) {
+  return GetOpenId(weixinBaseUrl, appId, secret, code);
+}
 
 
-export default {
-  
+
+export {
+  getOpenId
 }
