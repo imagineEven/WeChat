@@ -2,7 +2,7 @@
 	<view class="content">
     <image class="logo" src="/static/logo.png"></image>
 		<view>
-      <text class="title">{{title}}</text>
+      <!-- <text class="title">{{title}}</text> -->
 			<text>this is a first page of the uniapp</text>
     </view>
 	</view>

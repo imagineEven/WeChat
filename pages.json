@@ -43,16 +43,12 @@
 				"selectedIconPath": "static/apiHL.png",
 				"text": "love"
 			}
-// 			{
-// 				"pagePath": "pages/tabBar/template/template",
-// 				"iconPath": "static/template.png",
-// 				"selectedIconPath": "static/templateHL.png",
-// 				"text": "模板"
-// 			}
 		]
-	}
-	// 分包加载；
-// 	"subPackages": [{
-// 		"root": ""
-// 	}]
+	},
+	"subPackages": [{
+		"root": "subPackagesA",
+		"pages":[{
+			"path": "pageA/pageA"
+		}]
+	}]
 }

@@ -32,8 +32,8 @@ export default {
 	methods: {
 		launch() {
 			console.log('launch')
-			uni.showShareMenu({
-				title: 'asd'
+			uni.navigateTo({
+				url: '../../subPackagesA/pageA/pageA'
 			})
 		}
 	}

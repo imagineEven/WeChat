@@ -42,8 +42,8 @@ var variable = 'fined means: 被罚的';var _default =
   methods: {
     launch: function launch() {
       console.log('launch');
-      uni.showShareMenu({
-        title: 'asd' });
+      uni.navigateTo({
+        url: '../../subPackagesA/pageA/pageA' });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

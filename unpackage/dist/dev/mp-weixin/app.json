@@ -3,7 +3,14 @@
     "pages/index/index",
     "pages/launch/launch"
   ],
-  "subPackages": [],
+  "subPackages": [
+    {
+      "root": "subPackagesA",
+      "pages": [
+        "pageA/pageA"
+      ]
+    }
+  ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
