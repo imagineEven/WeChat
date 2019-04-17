@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/launch/launch"
+    "pages/launch/launch",
+    "pages/echarts/index"
   ],
   "subPackages": [
     {

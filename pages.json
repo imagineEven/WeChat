@@ -1,7 +1,5 @@
 {
 	"pages": [ 
-		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		// 页面组成；
 		{
 			"path": "pages/index/index",
 			"style": {
@@ -12,6 +10,14 @@
 		},
 		{
 			"path": "pages/launch/launch",
+			"style": {
+				"navigationBarTitleText": "Even",
+				"navigationBarBackgroundColor": "#8A6DE9",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		{
+			"path": "pages/echarts/index",
 			"style": {
 				"navigationBarTitleText": "Even",
 				"navigationBarBackgroundColor": "#8A6DE9",

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "Even",
+  "navigationBarBackgroundColor": "#8A6DE9",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "mpvue-echarts": "/components/mpvue-echarts/src/echarts",
+    "u-link": "/components/uLink"
+  }
+}
