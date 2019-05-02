@@ -1,4 +1,9 @@
-
+var Fly = require("../components/fly/wx.umd.min.js");
+var fly = new Fly;
+fly.interceptors.require.use((config, promise) => {
+  config.headers["X-Tag"] = "flyio";
+})
+console.log('fly', fly);
 
 function Request(dataObj) {
   Tips.showLoading()

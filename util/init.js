@@ -48,7 +48,8 @@ getProvider().then(providerArr => {
   return getOpenId(code)
 }).then(data => {
   Storage.setStorageSync('user', data);
-  console.log(Storage.getStorageSync('user'))
+  console.log(Storage.getStorageSync('user'));
 }).catch(err => {
   console.warn(err);
 })
+
