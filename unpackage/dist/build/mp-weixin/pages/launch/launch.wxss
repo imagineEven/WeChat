@@ -1,7 +1,0 @@
-
-.list {
-	margin: 10rpx 0;
-	border: #007AFF 1px solid;
-	width: 750rpx;
-}
-

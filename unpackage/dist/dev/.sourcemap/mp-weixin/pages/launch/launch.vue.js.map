@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///F:/work/hwtpl+/hello-uniapp/main.js"],"names":["createPage","Page"],"mappings":";;;;;;;;;;kDAAA;;AAEA;AACA,sN;AACAA,UAAU,CAACC,kBAAD,CAAV,C","file":"pages/launch/launch.vue.js","sourcesContent":["import 'uni-pages';\n\nimport Vue from 'vue'            \nimport Page from './pages/launch/launch.vue.vue'\ncreatePage(Page)"],"sourceRoot":""}

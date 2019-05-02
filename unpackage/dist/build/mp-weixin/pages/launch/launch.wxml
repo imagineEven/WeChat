@@ -1,1 +1,0 @@
-<view bind:__l="__l"><view class="one list">{{mate}}</view><view data-event-opts="{{[['tap',[['launch',['$event']]]]]}}" class="two list" bindtap="__e">April</view><button class="button" open-type="openSetting">分享给好友</button></view>
