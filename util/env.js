@@ -1,13 +1,11 @@
 
 let baseUrl = ''
 if(process.env.NODE_ENV === 'development'){
-  baseUrl = 'https://192.168.2.247'
+  baseUrl = 'https://uskkuau9zf.execute-api.cn-north-1.amazonaws.com.cn'
 }else{
-  baseUrl = 'https://mini-program.imaginelearning.cn'
+  baseUrl = 'https://uskkuau9zf.execute-api.cn-north-1.amazonaws.com.cn'
 }
+// let otherBaseUrl = 'http://api.4006688991.com/api/MiniProgram';
+let otherBaseUrl = 'https://uat-api.4006688991.com/api/MiniProgram';
 
-let weixinBaseUrl = 'https://api.weixin.qq.com/sns/jscode2session';
-let appId = "wx975d5ceaf8611171"
-let secret = "21ceadae454237fb0f61bd847d643e50"
-
-export { baseUrl, weixinBaseUrl, appId, secret };
+export { baseUrl, otherBaseUrl };

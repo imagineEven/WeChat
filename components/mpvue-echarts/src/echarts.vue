@@ -4,6 +4,7 @@
 
 <script>
 import WxCanvas from './wx-canvas';
+import { Storage } from '@/util/util'
 
 export default {
 	props: {
@@ -58,14 +59,29 @@ export default {
 					});
 				})
 				.exec();
+
+			// 雷达图生成图片（待canvas完整绘制出来，再生成图片）
+			setTimeout(()=>{
+				let exit = Storage.getStorageSync('RadarCanvasImg')
+				if(!exit){
+					this.canvasToTempFilePath()
+				}
+			},2000)
 		},
 		canvasToTempFilePath(opt) {
 			const { canvasId } = this;
 			this.ctx.draw(true, () => {
 				wx.canvasToTempFilePath({
 					canvasId,
-					...opt
-				});
+					...opt,
+					success: (res) => {
+						// 将图片传给父组件
+						this.$emit('getRadarImg',res.tempFilePath)
+					},
+					fail(res) {
+						// console.log('-------fail-------',res)
+					},
+				},this);
 			});
 		},
 		touchStart(e) {

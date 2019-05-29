@@ -1,5 +1,6 @@
 import { Tips, Storage } from "./util"
 import { getOpenId } from "./api"
+require('./sound')
 
 // 获取供应商
 function getProvider() {
@@ -14,7 +15,7 @@ function getProvider() {
         }
       },
       fail: function (err) {
-        console.log('获取供应商失败', err)
+        console.warn('获取供应商失败', err)
         reject(err)
       }
     }); 
@@ -34,22 +35,13 @@ function login(provider) {
         }
       },
       fail: function(err) {
-      	reject(err)
+      	reject(err);
       }
     });
   })
 }
 
-getProvider().then(providerArr => {
-  let provider = providerArr[0];
-  console.log('provider', provider);
-  return login(provider)
-}).then(code => {
-  return getOpenId(code)
-}).then(data => {
-  Storage.setStorageSync('user', data);
-  console.log(Storage.getStorageSync('user'));
-}).catch(err => {
-  console.warn(err);
-})
-
+export {
+  getProvider,
+  login
+}

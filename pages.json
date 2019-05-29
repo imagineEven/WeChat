@@ -1,60 +1,36 @@
 {
-	"pages": [ 
+	"pages": [
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "Even",
-				"navigationBarBackgroundColor": "#8A6DE9",
-				"navigationBarTextStyle": "white"
+				"navigationBarTitleText": "天赋测试"
 			}
 		},
 		{
-			"path": "pages/launch/launch",
+			"path": "pages/selectPage/index",
 			"style": {
-				"navigationBarTitleText": "Even",
-				"navigationBarBackgroundColor": "#8A6DE9",
-				"navigationBarTextStyle": "white"
-			}
-		},
-		{
-			"path": "pages/echarts/index",
-			"style": {
-				"navigationBarTitleText": "Even",
-				"navigationBarBackgroundColor": "#8A6DE9",
-				"navigationBarTextStyle": "white"
+				"navigationBarTitleText": "天赋测试"
 			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "天赋测试",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"tabBar": {
-			// 指定tab的表现，和来回之间的切换；
-		"color": "#7A7E83",
-		"selectedColor": "#007AFF",
-		"borderStyle": "black",
-		"backgroundColor": "#ffffff",
-		"list": [{
-				"pagePath": "pages/index/index",
-				"iconPath": "static/component.png",
-				"selectedIconPath": "static/componentHL.png",
-				"text": "Lift"
-			},
-			{
-				"pagePath": "pages/launch/launch",
-				"iconPath": "static/api.png",
-				"selectedIconPath": "static/apiHL.png",
-				"text": "love"
-			}
-		]
-	},
-	"subPackages": [{
-		"root": "subPackagesA",
-		"pages":[{
-			"path": "pageA/pageA"
-		}]
-	}]
+	"subPackages": [
+		{
+			"root": "assessPage",
+			"pages":[{
+				"path": "index/index"
+			}]
+		},
+		{
+			"root": "resultPage",
+			"pages":[{
+				"path": "index/index"
+			}]
+		}
+	]
 }

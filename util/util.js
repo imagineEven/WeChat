@@ -1,38 +1,60 @@
 class Tips {
-	constructor() {
-	  console.log('this is the tips')
-		this.isLoading = false;
-	}
+  constructor() {
+    this.isLoading = false;
+  }
 	
-	static showToast(title="成功", duration=1500, icon='none') {
-		uni.showToast({
-			title: title,
+  static showToast(title='成功', duration=1500, icon='none') {
+    uni.showToast({
+      title: title,
       mask: true,
       icon: icon,
       duration: duration
-		})
-	}
+    });
+  }
 	
-	static hideToast() {
-		uni.hideToast()
-	}
+  static hideToast() {
+    uni.hideToast();
+  }
 	
-	static showLoading(title='加载中') {
+  static showLoading(title='加载中') {
     if (!this.isLoading) {
       uni.showLoading({
         title: title,
         mask: true
-      })
+      });
       this.isLoading = true;
     }
-	}
+  }
 	
-	static hideLoading() {
+  static hideLoading() {
     if (this.isLoading) {
-      uni.hideLoading()
+      uni.hideLoading();
       this.isLoading = false;
     }
-	}
+  }
+  
+  static showModal(options, successFun, failFun ) {
+    let successCallback = function() {};
+    let failCallback =  function() {};
+    if (successFun && typeof successFun === 'function') {
+      successCallback = successFun;
+    }
+    if (failFun && typeof failFun === 'function') {
+      failCallback = failFun;
+    }
+    let { title, tontent } = options;
+    uni.showModal({
+      title: title,
+      content: tontent,
+      success: function(res) {
+        if (res.confirm) {
+          successCallback();
+        } else if (res.concel) {
+          failCallback();
+        }
+      }
+    });
+  }
 }
   
 class Storage {
@@ -47,7 +69,7 @@ class Storage {
         success: resolve,
         fail: reject
       });
-    })
+    });
   }
 
   static getStorage(key) {
@@ -55,13 +77,13 @@ class Storage {
       uni.getStorage({
         key: key,
         success: function (res) {
-          resolve(res.data)
+          resolve(res.data);
         },
         fail: function() {
           reject();
         }
       });
-    })
+    });
   }
 
   static removeStorage(key) {
@@ -71,7 +93,7 @@ class Storage {
         success: resolve,
         fail: reject
       });
-    })
+    });
   }
 
   static clearStorage() {
@@ -100,9 +122,19 @@ class Storage {
   }
 }
 
-
+function afterHandle(afterFunc, targetFunc) {
+  let proxy = new Proxy(targetFunc, {
+    apply(target, ctx, args) {
+      Reflect.apply(target, ctx, [].concat(args)).then((res) => {
+        Reflect.apply(afterFunc, ctx, [].concat([res]));
+      });
+    }
+  });
+  return proxy;
+}
 
 export {
-	Tips,
-  Storage
-}
+  Tips,
+  Storage,
+  afterHandle
+};
