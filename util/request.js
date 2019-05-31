@@ -1,5 +1,6 @@
 import { Tips } from './util.js';
 import { baseUrl } from './env';
+let Fly = require('../components/fly/wx');
 /**
  * @param {Object} dataObj
  * @param {Number} time : 倒计时弱网的时间
@@ -111,6 +112,91 @@ function GetOpenId(url, appid, secret, code) {
       }
     })
   })
+}
+
+class Server {
+  constructor() {
+    this.fly = new Fly();
+    this.createInterceptor();
+  }
+
+  createInterceptor() {
+    //添加拦截器
+    this.fly.interceptors.request.use((config, promise)=>{
+      //给所有请求添加自定义header
+      config.headers['X-Tag']='flyio';
+      Tips.showLoading();
+      config.baseURL = baseUrl;
+      config.parseJson = true;
+      config.headers['Content-Type'] = 'application/json';
+      return config;
+    });
+
+    //添加响应拦截器，响应拦截器会在then/catch处理之前执行
+    this.fly.interceptors.response.use(
+      (response) => {
+        //只将请求结果的data字段返回
+        Tips.hideLoading();
+        if (+response.data.statusCode === 200) {
+          return Promise.resolve(response.data);
+        } else {
+          if (response.data.message && response.data) {
+            Tips.showToast(response.data.message);
+          } else {
+            Tips.showToast('请求失败');
+          }
+          return Promise.reject(response.data);
+        }
+      },
+      (err) => {
+        //发生网络错误后会走到这里
+        Tips.hideLoading();
+        Tips.showToast('请求失败');
+        return Promise.reject(err);
+      }
+    );
+  }
+
+  // 获取供应商
+  getProvider() {
+    return new Promise((resolve, reject)=> {
+      uni.getProvider({
+        service: 'oauth',
+        success: function (res) {
+          console.log('res', res);
+          if (res.provider.length > 0) {
+            resolve(res.provider);
+          } else {
+            reject('没有获取到provider');
+          }
+        },
+        fail: function (err) {
+          console.warn('获取供应商失败', err);
+          reject(err);
+        }
+      }); 
+    });
+  }
+
+  // 获取code
+  login(provider) {
+    return new Promise((resolve, reject)=> {
+      uni.login({
+        provider: provider,
+        success: function (loginRes) {
+          if (loginRes.code) {
+            resolve(loginRes.code);
+          } else {
+            reject('没有获取到code');
+          }
+        },
+        fail: function(err) {
+          reject(err);
+        }
+      });
+    });
+  }
+
 }
 
 export {
