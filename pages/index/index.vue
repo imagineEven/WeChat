@@ -1,7 +1,7 @@
 <template>
   <view class="begin_wrap" :style="{backgroundImage:'url('+bgImage+')'}">
     <view class="begin_tip" v-if="iamgeVisiable">
-      <view class="tip_box" :animation="boxAnimationData">本测试旨在为孩子个性化学习提供解决方案。美国想象力英语根据美国著名心理学家、美国耶鲁大学博士提出阿尔法多元智能测评，选取全球1400万个学生样本及人工智能分析，协助家长全面了解孩子的潜能天赋，科学启发天赋潜能，实现因材施教。</view>
+      <view class="tip_box" :animation="boxAnimationData">111本测试旨在为孩子个性化学习提供解决方案。美国想象力英语根据美国著名心理学家、美国耶鲁大学博士提出阿尔法多元智能测评，选取全球1400万个学生样本及人工智能分析，协助家长全面了解孩子的潜能天赋，科学启发天赋潜能，实现因材施教。</view>
 	    <img @click="getIntro" id="intoPage" class="tip_btn" :src="introImage" v-if="testStatus === 1" alt="" :animation="btnAnimationData">
 			<view class="continueIntro" v-else-if="testStatus === 2">
 				<img @click="continueIntro" id="intoPage" :animation="btnAnimationData"  class="btnOne" :src="continueImage" alt="">
